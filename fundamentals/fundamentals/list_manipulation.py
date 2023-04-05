@@ -70,3 +70,6 @@ print(words[0:3])
 copy_of_copy_of_words = copy_of_words[:]
 copy_of_copy_of_words.append("coding")
 print(copy_of_copy_of_words)
+copy_of_copy_of_words.append(words[0:1])
+copy_of_copy_of_words.append(words[4])
+print(copy_of_copy_of_words)
