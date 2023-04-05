@@ -40,3 +40,11 @@ print(name1) # should print Eddie Aikau
 #   Call the function again using your own name and print the results!
 my_name = full_name("Winter", "Lee")
 print(my_name)
+
+
+def be_cheerful(name = "Mr. Nibbles", repeat = 2):
+    print(f"Good morning {name}\n" * repeat)
+
+be_cheerful("Winter", 3)
+be_cheerful()
+be_cheerful(repeat = 4, name = "Benny Bob")
