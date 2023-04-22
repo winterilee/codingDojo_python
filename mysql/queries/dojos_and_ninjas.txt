@@ -1,0 +1,18 @@
+INSERT INTO dojos (name)
+VALUES('LA'), ('San Francisco'), ('Seattle');
+DELETE FROM dojos
+WHERE id BETWEEN 1 AND 3;
+INSERT INTO dojos (name)
+VALUES('New York'), ('Newark'), ('Philadelphia');
+INSERT INTO ninjas (first_name, last_name, age, dojo_id)
+VALUES('Banana', 'Shake', 25, 4), ('Straw', 'Berry', 31, 4), ('Pine', 'Apple', 39, 4);
+INSERT INTO ninjas (first_name, last_name, age, dojo_id)
+VALUES('Crocus', 'Sativus', 28, 5), ('Kinabalu', 'Orchid', 21, 5), ('Kadupul', 'Flower', 33, 5);
+INSERT INTO ninjas (first_name, last_name, age, dojo_id)
+VALUES('Spring', 'Blossoms', 23, 6), ('Summer', 'Beaches', 29, 6), ('Autumn', 'Bakes', 32, 6);
+SELECT * FROM ninjas
+WHERE dojo_id = 4;
+SELECT * FROM ninjas
+WHERE dojo_id = 6;
+SELECT * FROM dojos
+WHERE id IN (SELECT dojo_id FROM ninjas WHERE id = 9);
