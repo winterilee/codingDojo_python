@@ -1,18 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Hello World!'
-
-@app.route('/success')
-def success():
-    return 'Success'
-
-@app.route('/hello/<string:name>/<int:num>')
-def hello(name, num):
-    return f"Hello {name * num}"
+    return render_template("index.html", phrase="hello", times=5)
 
 if __name__ == "__main__":
     app.run(debug = True, port = 5001)

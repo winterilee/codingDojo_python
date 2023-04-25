@@ -1,0 +1,13 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+p {
+    background-color: cornflowerblue;
+    color: beige;
+    padding: 10px;
+    display: inline-block;
+}
