@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, session, url_for
 from flask_app import app
-from users import Users
+from flask_app.models.users import Users
 
 @app.route("/")
 def index():
