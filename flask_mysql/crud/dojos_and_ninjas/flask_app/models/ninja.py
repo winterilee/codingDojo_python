@@ -10,6 +10,7 @@ class Ninja:
         self.age = data["age"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
+        self.dojo_id = data["dojo_id"]
     
     @classmethod
     def get_all(cls):
@@ -19,13 +20,6 @@ class Ninja:
         for i in results:
             ninja_list.append(cls(i))
         return ninja_list
-    
-    @classmethod
-    def get_group(cls, dojo_id):
-        query = "SELECT * FROM dojos LEFT JOIN ninjas ON ninjas.dojo_id = dojos.id WHERE dojos.id = %(id)s;"
-        data = {"id":dojo_id}
-        results = connectToMySQL(cls.db).query_db(query, data)
-        return results
 
     @classmethod
     def get_one(cls, ninja_id):
@@ -33,6 +27,18 @@ class Ninja:
         data = {"id":ninja_id}
         result = connectToMySQL(cls.db).query_db(query, data)
         return cls(result[0])
+    
+    @classmethod
+    def get_one_from_group(cls, data):
+        query = "SELECT * FROM ninjas JOIN dojos ON ninjas.dojo_id = dojos.id WHERE ninjas.id = %(id)s;"
+        results = connectToMySQL(cls.db).query_db(query, data)
+        print(results)
+        selected_ninja = cls(results[0])
+        print(selected_ninja)
+        for row in results:
+            dojo_dict = {"id":row["dojos.id"]}
+            selected_ninja.dojo_info = dojo_dict
+        return selected_ninja
     
     @classmethod
     def save(cls, data):
@@ -43,12 +49,10 @@ class Ninja:
     @classmethod
     def update(cls, data):
         query = "UPDATE ninjas SET first_name = %(first_name)s, last_name = %(last_name)s, age = %(age)s WHERE id = %(id)s;"
-        result = connectToMySQL(cls.db).query_db(query, data)
-        return result
+        return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
     def delete(cls, ninja_id):
         query = "DELETE FROM ninjas WHERE id = %(id)s;"
         data = {"id":ninja_id}
-        result = connectToMySQL(cls.db).query_db(query, data)
-        return result
+        return connectToMySQL(cls.db).query_db(query, data)
