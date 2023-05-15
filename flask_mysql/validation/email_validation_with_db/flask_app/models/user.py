@@ -49,13 +49,22 @@ class User:
     @staticmethod
     def validate_user(user):
         is_valid = True
-        if len(user["first_name"]) < 2:
+        if len(user["first_name"]) <= 0:
+            flash("First name is required.")
+            is_valid = False
+        elif len(user["first_name"]) < 2:
             flash("First name must be at least 2 characters.")
             is_valid = False
-        if len(user["last_name"]) < 2:
+        if len(user["last_name"]) <= 0:
+            flash("Last name is required.")
+            is_valid = False
+        elif len(user["last_name"]) < 2:
             flash("Last name must be at least 2 characters.")
             is_valid = False
-        if not EMAIL_REGEX.match(user["email"]):
-            flash("Invalid email address!")
+        if len(user["email"]) <= 0:
+            flash("Email is required.")
+            is_valid = False
+        elif not EMAIL_REGEX.match(user["email"]):
+            flash("Invalid email address.")
             is_valid = False
         return is_valid
