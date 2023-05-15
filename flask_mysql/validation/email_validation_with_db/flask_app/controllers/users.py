@@ -22,8 +22,10 @@ def new_user():
 
 @app.route("/new_user/create", methods = ['POST'])
 def create():
+    if not user.User.validate_user(request.form):
+        return redirect("/new_user")
     user.User.save(request.form)
-    return redirect("/users")
+    return redirect("/")
 
 @app.route("/user_update/<int:user_id>")
 def update_form(user_id):
@@ -32,10 +34,12 @@ def update_form(user_id):
 
 @app.route("/user_update/submit", methods = ['POST'])
 def update():
+    if not user.User.validate_user(request.form):
+        return redirect(f"/user_update/{request.form['id']}")
     user.User.update(request.form)
-    return redirect("/users")
+    return redirect("/")
 
 @app.route("/user_delete/<int:user_id>")
 def delete(user_id):
     user.User.delete(user_id)
-    return redirect("/users")
+    return redirect("/")

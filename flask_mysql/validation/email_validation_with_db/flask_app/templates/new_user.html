@@ -11,13 +11,20 @@
 <body>
     <div class="container-sm">
         <h1 class="p-1">Add a new User</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <form action="/new_user/create" method="POST" class="d-flex flex-column">
-            <label for="fname" class="p-1">First Name:</label>
-            <input type="text" name="fname" class="p-1">
-            <label for="lname" class="p-1">Last Name:</label>
-            <input type="text" name="lname" class="p-1">
-            <label for="em" class="p-1">Email:</label>
-            <input type="text" name="em" class="p-1">
+            <label for="first_name" class="p-1">First Name:</label>
+            <input type="text" name="first_name" class="p-1">
+            <label for="last_name" class="p-1">Last Name:</label>
+            <input type="text" name="last_name" class="p-1">
+            <label for="email" class="p-1">Email:</label>
+            <input type="text" name="email" class="p-1">
             <input type="submit" value="Add a new User" class="p-1 mt-3">
         </form>
         <hr>

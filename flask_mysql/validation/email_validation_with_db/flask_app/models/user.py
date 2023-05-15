@@ -1,4 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask import flash
+import re
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 class User:
     DB = "users_schema"
@@ -28,13 +31,13 @@ class User:
     
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email) VALUES (%(fname)s, %(lname)s, %(em)s);"
+        query = "INSERT INTO users (first_name, last_name, email) VALUES (%(first_name)s, %(last_name)s, %(email)s);"
         result = connectToMySQL(cls.DB).query_db(query, data)
         return result
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE users SET first_name = %(fname)s, last_name = %(lname)s, email = %(em)s WHERE id = %(id)s;"
+        query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s WHERE id = %(id)s;"
         return connectToMySQL(cls.DB).query_db(query, data)
 
     @classmethod
@@ -42,3 +45,17 @@ class User:
         query = "DELETE FROM users WHERE id = %(id)s;"
         data = {"id":user_id}
         return connectToMySQL(cls.DB).query_db(query, data)
+
+    @staticmethod
+    def validate_user(user):
+        is_valid = True
+        if len(user["first_name"]) < 2:
+            flash("First name must be at least 2 characters.")
+            is_valid = False
+        if len(user["last_name"]) < 2:
+            flash("Last name must be at least 2 characters.")
+            is_valid = False
+        if not EMAIL_REGEX.match(user["email"]):
+            flash("Invalid email address!")
+            is_valid = False
+        return is_valid
