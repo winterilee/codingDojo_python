@@ -19,6 +19,14 @@ class User:
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(emails)s, %(password)s);"
         return connectToMySQL(cls.db).query_db(query, data)
     
+    @classmethod
+    def get_by_email(cls, data):
+        query = "SELECT * FROM users WHERE email = %(email)s;"
+        result = connectToMySQL(cls.db).query_db(query, data)
+        if len(result) < 1:
+            return False
+        return cls(result[0])
+    
     @staticmethod
     def validate_user(user):
         is_valid = True
