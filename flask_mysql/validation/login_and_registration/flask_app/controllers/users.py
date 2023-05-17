@@ -27,14 +27,11 @@ def login():
     data = {"email": request.form["email"]}
     user_in_db = user.User.get_by_email(data)
     if not user_in_db:
-        flash("Invalid login.")
+        flash("Invalid login.", "login")
         return redirect(url_for("index"))
     if not bcrypt.check_password_hash(user_in_db.password, request.form["password"]):
-        flash("Invalid login.")
+        flash("Invalid login.", "login")
         return redirect(url_for("index"))
     session["user_id"] = user_in_db.id
-    return redirect(url_for("dashboard"))
-
-@app.route("/dashboard")
-def dashboard():
+    session["user_first_name"] = user_in_db.first_name
     return render_template("dashboard.html")
