@@ -39,9 +39,7 @@ def login():
     session["logged_in_name"] = user_in_db.first_name
     return redirect (url_for("dashboard"))
 
-@app.route("/dashboard")
-def dashboard():
-    if "logged_in_id" not in session:
-        return redirect(url_for("index"))
-    #! place for get_all recipes
-    return render_template("dashboard.html")
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
