@@ -30,10 +30,14 @@
             {% for recipe in recipes %}
             <tbody>
                 <tr>
-                    <th>{{recipe.name}}</th>
-                    <th>{{recipe.under}}</th>
-                    <th>{{recipe.username}}</th>
-                    <th><a href="#">View recipe</a>{% if recipe.user_id == session["logged_in_id"] %} | <a href="#">edit</a> | <a href="#">delete</a>{% endif %}</th>
+                    <td>{{recipe.name}}</td>
+                    {% if recipe.under == 1 %}
+                        <td>Yes</td>
+                    {% else %}
+                        <td>No</td>
+                    {% endif %}
+                    <td>{{recipe.username}}</td>
+                    <td><a href="#">View recipe</a>{% if recipe.user_id == session["logged_in_id"] %} | <a href="#">edit</a> | <a href="#">delete</a>{% endif %}</td>
                 </tr>
             </tbody>
             {% endfor %}

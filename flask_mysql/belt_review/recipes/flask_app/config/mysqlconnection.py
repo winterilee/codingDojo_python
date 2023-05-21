@@ -25,9 +25,9 @@ class MySQLConnection:
                 else:
                     self.connection.commit()
             except Exception as e:
-                print("!!!!!!!!!!"*10)
+                print("!!!!!!!!!!"*5)
                 print("Something went wrong", e)
-                print("!!!!!!!!!!"*10)
+                print("!!!!!!!!!!"*5)
                 return False
             finally:
                 self.connection.close() 

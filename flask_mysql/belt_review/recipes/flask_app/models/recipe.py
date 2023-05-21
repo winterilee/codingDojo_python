@@ -16,7 +16,7 @@ class Recipe:
     
     @classmethod
     def create_recipe(cls, data):
-        query = "INSER INTO recipes (name, description, instruction, under, date, user_id) VALUES (%(name)s, %(description)s, %(instruction)s, %(under)s, %(date)s, %(user_id)s)"
+        query = "INSERT INTO recipes (name, description, instruction, under, date, user_id) VALUES (%(name)s, %(description)s, %(instruction)s, %(under)s, %(date)s, %(user_id)s);"
         return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
@@ -26,7 +26,7 @@ class Recipe:
         recipe_list = []
         for row in results:
             one_recipe = {
-                "id": row["recipes.id"],
+                "id": row["id"],
                 "name": row["name"],
                 "under": row["under"],
                 "username": row["first_name"],
@@ -58,8 +58,5 @@ class Recipe:
             is_valid = False
         if len(recipe["date"]) <= 0:
             flash("Date is required.", "recipe")
-            is_valid = False
-        if len(recipe["under"]) <= 0:
-            flash("Please check whether the dish takes under 30 minutes or not.", "recipe")
             is_valid = False
         return is_valid

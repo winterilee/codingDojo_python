@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, flash, session, url_for
 from flask_app import app
-from flask_app.models import recipe
+from flask_app.models import recipe, user
 
 @app.route("/dashboard")
 def dashboard():
@@ -22,5 +22,13 @@ def create_recipe():
     if not recipe.Recipe.validate_recipe(request.form):
         return redirect(url_for("new_recipe"))
     else:
-        recipe.Recipe.create_recipe(request.form)
+        data = {
+            "name": request.form["name"],
+            "description": request.form["description"],
+            "instruction": request.form["instruction"],
+            "date": request.form["date"],
+            "under": int(request.form["under"]),
+            "user_id": session["logged_in_id"]
+        }
+        recipe.Recipe.create_recipe(data)
     return redirect(url_for("dashboard"))
