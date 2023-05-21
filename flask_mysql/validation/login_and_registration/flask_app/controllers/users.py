@@ -35,3 +35,8 @@ def login():
     session["user_id"] = user_in_db.id
     session["user_first_name"] = user_in_db.first_name
     return render_template("dashboard.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
