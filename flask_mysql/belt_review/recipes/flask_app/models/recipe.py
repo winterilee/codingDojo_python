@@ -35,6 +35,24 @@ class Recipe:
             recipe_list.append(one_recipe)
         return recipe_list
     
+    @classmethod
+    def get_one(cls, recipe_id):
+        query = "SELECT * FROM recipes WHERE id = %(id)s;"
+        data = {"id": recipe_id}
+        result = connectToMySQL(cls.db).query_db(query, data)
+        return cls(result[0])
+    
+    @classmethod
+    def update_recipe(cls, data):
+        query = "UPDATE recipes SET name = %(name)s, description = %(description)s, instruction = %(instruction)s, date = %(date)s, under = %(under)s WHERE id = %(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
+    
+    @classmethod
+    def delete_recipe(cls, recipe_id):
+        query = "DELETE FROM recipes WHERE id = %(id)s;"
+        data = {"id": recipe_id}
+        return connectToMySQL(cls.db).query_db(query, data)
+    
     @staticmethod
     def validate_recipe(recipe):
         is_valid = True
